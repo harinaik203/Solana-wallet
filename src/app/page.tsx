@@ -8,6 +8,33 @@ import TransactionHistory from "@/components/transaction-history";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import WalletConnect from "@/components/wallet-connect";
 import WalletContextProvider from "@/providers/wallet-context-provider";
+import dynamic from "next/dynamic";
+
+// Dynamically import components that use wallet functionality
+const DynamicWalletConnect = dynamic(() => import("@/components/wallet-connect"), {
+  ssr: false,
+});
+
+const DynamicTokenBalances = dynamic(() => import("@/components/token-balances"), {
+  ssr: false,
+});
+
+const DynamicTransactionHistory = dynamic(
+  () => import("@/components/transaction-history"),
+  { ssr: false }
+);
+
+const DynamicCreateToken = dynamic(() => import("@/components/create-token"), {
+  ssr: false,
+});
+
+const DynamicMintToken = dynamic(() => import("@/components/mint-token"), {
+  ssr: false,
+});
+
+const DynamicSendToken = dynamic(() => import("@/components/send-token"), {
+  ssr: false,
+});
 
 export default function HomePage() {
   return (
@@ -23,11 +50,11 @@ export default function HomePage() {
             </p>
           </header>
 
-          <main className="mx-auto grid max-w-6xl grid-cols-1 gap-6 lg:grid-cols-2" suppressHydrationWarning>
+          <main className="mx-auto grid max-w-6xl grid-cols-1 gap-6 lg:grid-cols-2">
             <div className="space-y-6">
-              <WalletConnect />
-              <TokenBalances />
-              <TransactionHistory />
+              <DynamicWalletConnect />
+              <DynamicTokenBalances />
+              <DynamicTransactionHistory />
             </div>
             <div className="space-y-6">
               <Tabs defaultValue="create">
@@ -37,13 +64,13 @@ export default function HomePage() {
                   <TabsTrigger value="send">Send</TabsTrigger>
                 </TabsList>
                 <TabsContent value="create">
-                  <CreateToken />
+                  <DynamicCreateToken />
                 </TabsContent>
                 <TabsContent value="mint">
-                  <MintToken />
+                  <DynamicMintToken />
                 </TabsContent>
                 <TabsContent value="send">
-                  <SendToken />
+                  <DynamicSendToken />
                 </TabsContent>
               </Tabs>
             </div>

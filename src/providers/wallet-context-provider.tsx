@@ -17,6 +17,7 @@ import { clusterApiUrl } from "@solana/web3.js";
 import dynamic from "next/dynamic";
 import React, { useMemo } from "react";
 
+// Dynamically import the WalletModalProvider to avoid SSR issues
 const WalletModalProviderDynamic = dynamic(
   () => import("@solana/wallet-adapter-react-ui").then((mod) => mod.WalletModalProvider),
   { ssr: false }
@@ -37,7 +38,6 @@ const WalletContextProvider = ({ children }: Props) => {
   // Only the wallets you configure here will be compiled into your application
   const wallets = useMemo(
     () => [new PhantomWalletAdapter(), new SolflareWalletAdapter()],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [network],
   );
 

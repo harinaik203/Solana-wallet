@@ -151,7 +151,7 @@ const WalletConnect = () => {
             <p className="text-muted-foreground mb-4 text-center">
               Connect your wallet to create and mint tokens
             </p>
-            <WalletMultiButton className="bg-solana-gradient text-white hover:opacity-90" suppressHydrationWarning />
+            <WalletMultiButtonDynamic className="bg-solana-gradient text-white hover:opacity-90" />
           </div>
         ) : (
           <div className="space-y-4">
